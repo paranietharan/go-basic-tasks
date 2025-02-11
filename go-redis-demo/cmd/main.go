@@ -29,4 +29,44 @@ func main() {
 	}
 
 	fmt.Println("Retrieved from Redis:", val)
+
+	// Hash data structure
+	hashFields := []string{
+		"model", "Deimos",
+		"brand", "Ergonom",
+		"type", "Enduro bikes",
+		"price", "4972",
+	}
+
+	res1, err := redisClient.Client.HSet(ctx, "bike:1", hashFields).Result()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(res1)
+
+	res2, err := redisClient.Client.HGet(ctx, "bike:1", "model").Result()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(res2)
+
+	res3, err := redisClient.Client.HGet(ctx, "bike:1", "price").Result()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(res3)
+
+	res4, err := redisClient.Client.HGetAll(ctx, "bike:1").Result()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(res4)
 }
